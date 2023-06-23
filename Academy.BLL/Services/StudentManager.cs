@@ -3,10 +3,10 @@ using Academy.BLL.Dtos.Student;
 using Academy.BLL.Services.Contracts;
 using Academy.DAL.Entities;
 using Academy.DAL.Repositories.Contracts;
-using Academy.DAL.Repositories.Student;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,6 +51,25 @@ namespace Academy.BLL.Services
                 Message = $"{result} Student is deleted"
             };
                 
+        }
+
+        public async Task<ICollection<StudentDto>> GetByCondition(Expression<Func<Student, bool>> predicate)
+        {
+            var students = await _studentRepository.GetByCondition(predicate);
+
+            var studentDtos = new List<StudentDto>();
+
+            foreach (var item in students)
+            {
+                studentDtos.Add(new StudentDto
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Age = item.Age,
+                });
+            }
+
+            return studentDtos;
         }
 
         public async Task<StudentDto> GetStudent(int? id)

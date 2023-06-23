@@ -1,7 +1,6 @@
-﻿using Academy.DAL.Repositories.Contracts;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Academy.DAL.Repositories.Contracts;
 using Academy.DAL.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-using Academy.DAL.Repositories.Student;
 
 namespace Academy.DAL
 {
@@ -11,6 +10,9 @@ namespace Academy.DAL
         {
             //services.AddScoped(typeof(IRepositoryAsync<>), typeof(EfCoreRepositoryAsync<>));
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<ITeacherGroupRepository, TeacherGroupsRepository>();
 
             return services;
         }

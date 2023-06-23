@@ -35,6 +35,15 @@ namespace Academy.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("Filter")]
+        public async Task<IActionResult> GetByCondition(string name)
+        {
+            var result = await _studentService.GetByCondition(x => x.Name.Contains(name));
+
+            return Ok(result);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int? id)
         {

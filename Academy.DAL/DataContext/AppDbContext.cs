@@ -12,5 +12,7 @@ namespace Academy.DAL.DataContext
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<TeacherGroups> TeacherGroups { get; set; }
     }
 }

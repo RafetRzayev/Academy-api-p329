@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,6 +50,13 @@ namespace Academy.DAL.Repositories
         public virtual async Task<T> GetAsync(int? id)
         {
             var result = await _dbContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
+
+        public async Task<ICollection<T>> GetByCondition(Expression<Func<T, bool>> predicate)
+        {
+            var result = await _dbContext.Set<T>().Where(predicate).ToListAsync();
 
             return result;
         }

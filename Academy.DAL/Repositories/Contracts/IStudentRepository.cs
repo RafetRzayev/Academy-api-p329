@@ -1,8 +1,6 @@
-﻿
-using Academy.DAL.Entities;
-using Academy.DAL.Repositories.Contracts;
+﻿using Academy.DAL.Entities;
 
-namespace Academy.DAL.Repositories.Student
+namespace Academy.DAL.Repositories.Contracts
 {
     public interface IStudentRepository : IRepositoryAsync<Entities.Student>
     {

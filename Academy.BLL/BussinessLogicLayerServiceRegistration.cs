@@ -10,6 +10,9 @@ namespace Academy.BLL
         public static IServiceCollection AddBllServices(this IServiceCollection services)
         {
             services.AddScoped<IStudentService, StudentManager>();
+            services.AddScoped<IGroupService, GroupManager>();
+            services.AddScoped<ITeacherService, TeacherManager>();
+            services.AddScoped<ITeacherGroupService, TeacherGroupManager>();
 
             return services;
         }

@@ -10,6 +10,8 @@ namespace Academy.DAL.Entities
     {
         public string Name { get; set; }    
 
-        public ICollection<Student> Students { get; set; }  
+        public ICollection<Student> Students { get; set; }
+
+        public ICollection<TeacherGroups> TeacherGroups { get; set; }
     }
 }
