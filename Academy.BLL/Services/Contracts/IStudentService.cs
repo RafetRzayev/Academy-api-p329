@@ -1,4 +1,5 @@
-﻿using Academy.BLL.Dtos.Student;
+﻿using Academy.BLL.Dtos;
+using Academy.BLL.Dtos.Student;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace Academy.BLL.Services.Contracts
         Task<ICollection<StudentDto>> GetStudents();
         Task<StudentDto> GetStudent(int? id);
         Task CreateStudent(StudentCreateDto dto);
+        Task<ResponseModel> DeleteStudent(int id);
+
+        Task UpdateStudent(StudentUpdateDto student);
+
         Task<ICollection<StudentDto>> Test();
 
     }

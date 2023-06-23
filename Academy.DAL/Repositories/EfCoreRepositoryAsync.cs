@@ -26,9 +26,17 @@ namespace Academy.DAL.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public virtual async Task DeleteAsync(int id)
+        public virtual async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _dbContext.Set<T>().FindAsync(id);
+
+            if (entity == null) return -1;
+
+            _dbContext.Set<T>().Remove(entity);
+
+            await _dbContext.SaveChangesAsync();   
+
+            return entity.Id;
         }
 
         public virtual async Task<ICollection<T>> GetAllAsync()
@@ -40,14 +48,22 @@ namespace Academy.DAL.Repositories
 
         public virtual async Task<T> GetAsync(int? id)
         {
-            var result = await _dbContext.Set<T>().FindAsync(id);
+            var result = await _dbContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
             return result;
         }
 
-        public  virtual async Task UpdateAsync(int id, T entity)
+        public  virtual async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            var existEntity = await GetAsync(entity.Id);
+          
+            //existEntity = entity;
+           
+            if (existEntity is null) throw new Exception("Not found");
+
+            _dbContext.Set<T>().Update(entity);
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

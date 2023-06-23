@@ -1,4 +1,5 @@
-﻿using Academy.BLL.Dtos.Student;
+﻿using Academy.BLL.Dtos;
+using Academy.BLL.Dtos.Student;
 using Academy.BLL.Services.Contracts;
 using Academy.DAL.Entities;
 using Academy.DAL.Repositories.Contracts;
@@ -31,6 +32,25 @@ namespace Academy.BLL.Services
             };
 
             await _studentRepository.AddAsync(student);
+        }
+
+        public async Task<ResponseModel> DeleteStudent(int id)
+        {
+            var result = await _studentRepository.DeleteAsync(id);
+
+            if (result == -1)
+                return new ResponseModel
+                {
+                    Result = Result.Error.ToString(),
+                    Message = "Student not found"
+                };
+
+            return new ResponseModel
+            {
+                Result = Result.Success.ToString(),
+                Message = $"{result} Student is deleted"
+            };
+                
         }
 
         public async Task<StudentDto> GetStudent(int? id)
@@ -84,6 +104,19 @@ namespace Academy.BLL.Services
             }
 
             return studentDtos;
+        }
+
+        public async Task UpdateStudent(StudentUpdateDto dto)
+        {
+            var student = new Student()
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Age = dto.Age,
+                GroupId = dto.GroupId
+            };
+                
+            await _studentRepository.UpdateAsync(student);
         }
     }
 }

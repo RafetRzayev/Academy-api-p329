@@ -61,5 +61,21 @@ namespace Academy.API.Controllers
 
             return Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _studentService.DeleteStudent(id);
+
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(StudentUpdateDto dto)
+        {
+            await _studentService.UpdateStudent(dto);
+
+            return Ok();
+        }
     }
 }
