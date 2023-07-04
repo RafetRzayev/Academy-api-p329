@@ -2,6 +2,7 @@ using Academy.DAL.DataContext;
 using Academy.DAL;
 using Microsoft.EntityFrameworkCore;
 using Academy.BLL;
+using Academy.BLL.Mapping;
 
 namespace Academy.API
 {
@@ -21,9 +22,11 @@ namespace Academy.API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            //builder.Services.AddAutoMapper(typeof(MappingProfile));
+
             builder.Services.AddDalServices();
             builder.Services.AddBllServices();
-
+            
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

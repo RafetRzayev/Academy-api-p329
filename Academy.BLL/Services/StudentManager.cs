@@ -3,6 +3,7 @@ using Academy.BLL.Dtos.Student;
 using Academy.BLL.Services.Contracts;
 using Academy.DAL.Entities;
 using Academy.DAL.Repositories.Contracts;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,22 +15,28 @@ namespace Academy.BLL.Services
 {
     public class StudentManager : IStudentService
     {
+        private readonly IMapper _mapper;
+
         private readonly IStudentRepository _studentRepository;
 
-        public StudentManager(IStudentRepository studentRepository)
+        public StudentManager(IStudentRepository studentRepository, IMapper mapper)
         {
             _studentRepository = studentRepository;
+            _mapper = mapper;
         }
 
         public async Task CreateStudent(StudentCreateDto dto)
         {
-            var student = new Student
-            {
-                Name = dto.Name,
-                Age = dto.Age,
-                GroupId = dto.GroupId,
-                CreatedAt = DateTime.Now
-            };
+            //var student = new Student
+            //{
+            //    Name = dto.Name,
+            //    Age = dto.Age,
+            //    GroupId = dto.GroupId,
+            //    CreatedAt = DateTime.Now
+            //};
+
+            var student = _mapper.Map<Student>(dto);
+
 
             await _studentRepository.AddAsync(student);
         }
@@ -78,11 +85,14 @@ namespace Academy.BLL.Services
 
             if (student == null) return new StudentDto();
 
-            var studentDto = new StudentDto
-            {
-                Id = student.Id,
-                Name = student.Name
-            };
+
+            //var studentDto = new StudentDto
+            //{
+            //    Id = student.Id,
+            //    Name = student.Name
+            //};
+
+            var studentDto = _mapper.Map<StudentDto>(student);
 
             return studentDto;
         }
@@ -90,18 +100,18 @@ namespace Academy.BLL.Services
         public async Task<ICollection<StudentDto>> GetStudents()
         {
             var students = await _studentRepository.GetAllAsync();
-            
-            var studentDtos = new List<StudentDto>();
 
-            foreach (var item in students)
-            {
-                studentDtos.Add(new StudentDto
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Age = item.Age,
-                });
-            }
+            var studentDtos = _mapper.Map<List<StudentDto>>(students);
+
+            //foreach (var item in students)
+            //{
+            //    studentDtos.Add(new StudentDto
+            //    {
+            //        Id = item.Id,
+            //        Name = item.Name,
+            //        Age = item.Age,
+            //    });
+            //}
 
             return studentDtos;
         }

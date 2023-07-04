@@ -1,9 +1,11 @@
 ﻿using Academy.BLL.Dtos.Student;
 using Academy.BLL.Services.Contracts;
+using Academy.BLL.Validators.StudentDtoValidators;
 using Academy.DAL.DataContext;
 using Academy.DAL.Entities;
 using Academy.DAL.Repositories;
 using Academy.DAL.Repositories.Contracts;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +23,7 @@ namespace Academy.API.Controllers
         //}
 
         private IStudentService _studentService;
+        //private IValidator<StudentCreateDto> _validator;
 
         public StudentsController(IStudentService studentService)
         {
@@ -57,9 +60,20 @@ namespace Academy.API.Controllers
         }
 
         [HttpPost]
-        public async Task Post(StudentCreateDto dto)
+        public async Task<IActionResult> Post(StudentCreateDto dto)
         {
-          await _studentService.CreateStudent(dto);
+            //var studentCreateDtoValidation = new StudentCreateDtoValidation();
+            //var validationResult = studentCreateDtoValidation.Validate(dto);
+            //var validationResult = _validator.Validate(dto);
+
+            //if (!validationResult.IsValid)
+            //{
+            //    return BadRequest(validationResult);
+            //}
+
+            await _studentService.CreateStudent(dto);
+
+            return Ok();
         }
 
         [HttpGet]

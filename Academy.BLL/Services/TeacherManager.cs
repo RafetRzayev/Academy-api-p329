@@ -70,6 +70,8 @@ namespace Academy.BLL.Services
                     Groups = groupDtos
                 });
 
+                //groupDtos.Clear();
+
                 //groupDtos = new List<GroupDto>();
             }
 
