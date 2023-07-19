@@ -6,6 +6,7 @@ using Academy.DAL.Entities;
 using Academy.DAL.Repositories;
 using Academy.DAL.Repositories.Contracts;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace Academy.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class StudentsController : ControllerBase
     {
         //private readonly IRepositoryAsync<Student> _studentRepository;
