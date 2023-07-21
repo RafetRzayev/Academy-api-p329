@@ -17,11 +17,17 @@ namespace Academy.API.Controllers
         }
 
         [HttpPost]
-        public async Task<string> Login(TokenRequestModel model)
+        public async Task<IActionResult> Login(TokenRequestModel model)
         {
             var token = await _authService.CreateToken(model);
-
-            return token;
+            var tokenResponeModel = new TokenResponseModel { Token = token };
+           
+            return Ok(tokenResponeModel);
         }
+    }
+
+    class TokenResponseModel
+    {
+        public string Token { get; set; }
     }
 }

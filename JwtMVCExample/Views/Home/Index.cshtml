@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <a asp-action="login">Login</a>
+
+    <button class="btn btn-primary" id="btnGetStudents">GetStudents</button>
+</div>
+
+
+<script>
+    let button = document.getElementById("btnGetStudents");
+    button.onclick = function () {
+        console.log("test")
+        let token = localStorage.getItem('token');
+        fetch('https://localhost:7119/api/Students', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+
+        }).then(response =>
+            response.json()
+        ).then(data => {
+            console.log(data);
+        })
+
+    };
+</script>

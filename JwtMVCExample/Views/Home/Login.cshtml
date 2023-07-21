@@ -1,0 +1,38 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<div>
+        <input id="username" class="form-control"/>
+        <input id="password"  placeholder="password" class="form-control"/>
+        <button name="login" id="login">Login</button>
+</div>
+
+<script>
+    let button = document.getElementById("login");
+    button.onclick=function(){
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        fetch('https://localhost:7119/api/Authentication', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+
+        }).then(response=>
+            response.json()
+        ).then(data=>{
+            console.log(data);
+            localStorage.setItem('token', data.token);
+        })
+
+    };
+</script>
